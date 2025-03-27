@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ArrowRight, ShoppingBag, WhatsApp } from 'lucide-react';
+import { ArrowRight, ShoppingBag, MessageCircle } from 'lucide-react';
 
 const CTASection: React.FC = () => {
   return (
@@ -19,7 +19,7 @@ const CTASection: React.FC = () => {
             <div className="opacity-0 animate-fade-up">
               <div className="glass-card bg-white border border-klassico-gold/20 p-8 rounded-lg shadow-golden h-full flex flex-col">
                 <div className="flex items-center justify-center w-16 h-16 bg-klassico-gold/10 rounded-full mb-6">
-                  <WhatsApp className="w-7 h-7 text-klassico-gold" />
+                  <MessageCircle className="w-7 h-7 text-klassico-gold" />
                 </div>
                 
                 <h3 className="text-2xl font-display mb-4">Book a Virtual Stylist</h3>
