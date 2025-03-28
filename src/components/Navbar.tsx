@@ -1,8 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
-import { ShoppingBag, User, Menu, X } from 'lucide-react';
+import { ShoppingBag, Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Link, useLocation } from 'react-router-dom';
+import NavbarAuth from './NavbarAuth';
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -26,7 +27,6 @@ const Navbar: React.FC = () => {
   // Menu items with paths
   const menuItems = [
     { name: 'Collections', path: '/#collections' },
-    { name: 'Exclusivity', path: '/#exclusivity' },
     { name: 'Craftsmanship', path: '/#craftsmanship' },
     { name: 'Sustainability', path: '/#sustainability' },
     { name: 'About Us', path: '/about' },
@@ -76,12 +76,7 @@ const Navbar: React.FC = () => {
               Order via WhatsApp
             </a>
             
-            <button 
-              className="relative w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors"
-              aria-label="Account"
-            >
-              <User className="w-5 h-5 text-klassico-charcoal" />
-            </button>
+            <NavbarAuth />
             
             <button 
               className="relative w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors"
