@@ -69,17 +69,6 @@ const CTASection: React.FC = () => {
               </div>
             </div>
           </div>
-          
-          {/* VIP Program */}
-          <div className="mt-16 text-center opacity-0 animate-fade-up stagger-2">
-            <h3 className="text-2xl font-display mb-4">Join Klassico Inner Circle</h3>
-            <p className="text-klassico-muted mb-8 max-w-2xl mx-auto">
-              Become part of our exclusive membership for early access to new collections, special events, and members-only discounts.
-            </p>
-            <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="btn-secondary">
-              Learn More About VIP Program
-            </a>
-          </div>
         </div>
       </div>
     </section>

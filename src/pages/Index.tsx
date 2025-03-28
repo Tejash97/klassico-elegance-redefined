@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Collections from '@/components/Collections';
-import Exclusivity from '@/components/Exclusivity';
 import Craftsmanship from '@/components/Craftsmanship';
 import Sustainability from '@/components/Sustainability';
 import Testimonials from '@/components/Testimonials';
@@ -46,7 +45,6 @@ const Index: React.FC = () => {
       <Navbar />
       <Hero />
       <Collections />
-      <Exclusivity />
       <Craftsmanship />
       <Sustainability />
       <Testimonials />
