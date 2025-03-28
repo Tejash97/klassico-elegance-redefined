@@ -56,6 +56,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       
       if (success) {
         setUser(null);
+        toast.success('Logged out successfully');
       }
     } catch (error) {
       console.error('Logout error:', error);
@@ -66,7 +67,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const register = async (email: string, password: string): Promise<boolean> => {
     try {
       const user = await signUp(email, password);
-      return !!user;
+      if (user) {
+        toast.success('Registration successful! Please check your email for verification.');
+        return true;
+      }
+      return false;
     } catch (error) {
       console.error('Registration error:', error);
       toast.error('Registration failed. Please try again.');

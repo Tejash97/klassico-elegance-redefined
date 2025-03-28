@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { toast } from 'sonner';
 
 const Auth: React.FC = () => {
   const { login, register, isAdmin } = useAuth();
@@ -23,6 +24,7 @@ const Auth: React.FC = () => {
       const success = await login(email, password);
       
       if (success) {
+        toast.success('Logged in successfully!');
         navigate(isAdmin ? '/admin' : '/');
       }
     } finally {
@@ -35,8 +37,11 @@ const Auth: React.FC = () => {
     setIsLoading(true);
     
     try {
-      await register(email, password);
-      // Don't navigate, as user needs to verify email first
+      const success = await register(email, password);
+      
+      if (success) {
+        toast.success('Registration successful! Please check your email for verification.');
+      }
     } finally {
       setIsLoading(false);
     }
