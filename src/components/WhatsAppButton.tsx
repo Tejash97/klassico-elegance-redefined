@@ -13,7 +13,7 @@ type WhatsAppButtonProps = {
 
 const WhatsAppButton: React.FC<WhatsAppButtonProps> = ({
   productName,
-  phoneNumber = "+919023451234", // Default business phone number
+  phoneNumber = "+918910131099", // Updated WhatsApp number
   message = "I'd like to inquire about",
   className,
   variant = "default"
