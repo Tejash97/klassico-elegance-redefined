@@ -51,28 +51,29 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif;
+    @apply font-sans font-bold;
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-klassico-gold text-white px-8 py-3 rounded-sm inline-block 
-    font-medium tracking-wide transition-all duration-300 hover:shadow-golden
-    hover:translate-y-[-2px] active:translate-y-0 active:shadow-none;
+    @apply bg-klassico-gold text-white px-8 py-3 inline-block 
+    font-bold uppercase text-sm tracking-wide transition-all duration-300
+    hover:bg-klassico-charcoal;
   }
 
   .btn-secondary {
-    @apply border border-klassico-gold text-klassico-gold px-8 py-3 rounded-sm inline-block 
-    font-medium tracking-wide transition-all duration-300 hover:bg-klassico-gold/5;
+    @apply bg-white text-klassico-charcoal border border-klassico-charcoal px-8 py-3 inline-block 
+    font-bold uppercase text-sm tracking-wide transition-all duration-300
+    hover:bg-klassico-charcoal hover:text-white;
   }
 
   .section-title {
-    @apply font-display text-4xl sm:text-5xl md:text-6xl font-medium mb-6 text-klassico-charcoal;
+    @apply text-4xl md:text-5xl font-bold uppercase mb-6 text-klassico-charcoal;
   }
 
   .section-subtitle {
-    @apply font-serif text-xl md:text-2xl font-normal text-klassico-muted mb-12 max-w-3xl mx-auto;
+    @apply text-xl md:text-2xl font-normal text-gray-600 mb-12 max-w-3xl mx-auto;
   }
 
   .tag {
@@ -151,4 +152,67 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Button animations */
+.button-hover-slide {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.button-hover-slide::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background-color: theme('colors.klassico.charcoal');
+  transition: height 0.3s ease;
+  z-index: -1;
+}
+
+.button-hover-slide:hover::after {
+  height: 100%;
+}
+
+/* Image zoom on hover */
+.zoom-hover {
+  overflow: hidden;
+}
+
+.zoom-hover img {
+  transition: transform 0.7s ease;
+}
+
+.zoom-hover:hover img {
+  transform: scale(1.1);
+}
+
+/* Fade in animation for sections */
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Pepe Jeans style elements */
+.pepe-border {
+  position: relative;
+}
+
+.pepe-border::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 40px;
+  height: 3px;
+  background-color: theme('colors.klassico.gold');
 }

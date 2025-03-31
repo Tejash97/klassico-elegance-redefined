@@ -1,46 +1,74 @@
 
 import React from 'react';
-import { Facebook, Instagram, Linkedin, Twitter } from 'lucide-react';
+import { Facebook, Instagram, Linkedin, Twitter, ChevronRight, Mail, Phone, MapPin } from 'lucide-react';
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-klassico-charcoal text-white pt-16 pb-8">
-      <div className="container mx-auto px-4 md:px-8">
-        {/* Main Footer */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-16">
+    <footer className="bg-klassico-charcoal text-white">
+      {/* Newsletter Section */}
+      <div className="bg-klassico-gold py-12">
+        <div className="container mx-auto px-4 md:px-8">
+          <div className="flex flex-col md:flex-row items-center justify-between">
+            <div className="mb-6 md:mb-0 text-center md:text-left">
+              <h3 className="text-2xl font-bold text-white uppercase mb-2">Subscribe to our newsletter</h3>
+              <p className="text-white/80">Get the latest updates on new products and upcoming sales</p>
+            </div>
+            <div className="w-full md:w-auto">
+              <form className="flex">
+                <input 
+                  type="email" 
+                  placeholder="Your email address" 
+                  className="px-4 py-3 w-full md:w-80 text-klassico-charcoal text-sm"
+                  required
+                />
+                <button 
+                  type="submit" 
+                  className="bg-klassico-charcoal text-white px-6 py-3 text-xs uppercase font-bold hover:bg-black transition-colors"
+                >
+                  Subscribe
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {/* Main Footer */}
+      <div className="container mx-auto px-4 md:px-8 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand Column */}
           <div>
-            <a href="#" className="inline-block text-2xl font-display font-semibold tracking-wider mb-6">
+            <a href="#" className="inline-block text-3xl font-bold uppercase tracking-widest mb-6">
               Klassico<span className="text-klassico-gold">.</span>
             </a>
             <p className="text-white/70 mb-6">
-              Where Heritage Meets Haute Couture – Timeless Styles, Unmatched Comfort.
+              Premium quality clothing for the modern individual. Timeless designs that transcend fashion trends.
             </p>
             <div className="flex space-x-4">
               <a 
                 href="#" 
-                className="w-10 h-10 rounded-full flex items-center justify-center bg-white/5 hover:bg-white/10 transition-colors"
+                className="w-10 h-10 rounded-full flex items-center justify-center bg-white/10 hover:bg-klassico-gold transition-colors"
                 aria-label="Facebook"
               >
                 <Facebook className="w-5 h-5" />
               </a>
               <a 
                 href="#" 
-                className="w-10 h-10 rounded-full flex items-center justify-center bg-white/5 hover:bg-white/10 transition-colors"
+                className="w-10 h-10 rounded-full flex items-center justify-center bg-white/10 hover:bg-klassico-gold transition-colors"
                 aria-label="Instagram"
               >
                 <Instagram className="w-5 h-5" />
               </a>
               <a 
                 href="#" 
-                className="w-10 h-10 rounded-full flex items-center justify-center bg-white/5 hover:bg-white/10 transition-colors"
+                className="w-10 h-10 rounded-full flex items-center justify-center bg-white/10 hover:bg-klassico-gold transition-colors"
                 aria-label="Twitter"
               >
                 <Twitter className="w-5 h-5" />
               </a>
               <a 
                 href="#" 
-                className="w-10 h-10 rounded-full flex items-center justify-center bg-white/5 hover:bg-white/10 transition-colors"
+                className="w-10 h-10 rounded-full flex items-center justify-center bg-white/10 hover:bg-klassico-gold transition-colors"
                 aria-label="LinkedIn"
               >
                 <Linkedin className="w-5 h-5" />
@@ -50,110 +78,112 @@ const Footer: React.FC = () => {
           
           {/* Links Columns */}
           <div>
-            <h3 className="text-lg font-medium mb-6">Collections</h3>
+            <h3 className="text-lg font-bold uppercase mb-6">Shop</h3>
             <ul className="space-y-3">
               <li>
-                <a href="#" className="text-white/70 hover:text-white transition-colors">Premium Jeans</a>
+                <a href="#" className="text-white/70 hover:text-klassico-gold transition-colors flex items-center">
+                  <ChevronRight className="w-4 h-4 mr-2" />
+                  <span>Men's Collection</span>
+                </a>
               </li>
               <li>
-                <a href="#" className="text-white/70 hover:text-white transition-colors">Bespoke Blazers</a>
+                <a href="#" className="text-white/70 hover:text-klassico-gold transition-colors flex items-center">
+                  <ChevronRight className="w-4 h-4 mr-2" />
+                  <span>Women's Collection</span>
+                </a>
               </li>
               <li>
-                <a href="#" className="text-white/70 hover:text-white transition-colors">Luxury Kurtis</a>
+                <a href="#" className="text-white/70 hover:text-klassico-gold transition-colors flex items-center">
+                  <ChevronRight className="w-4 h-4 mr-2" />
+                  <span>New Arrivals</span>
+                </a>
               </li>
               <li>
-                <a href="#" className="text-white/70 hover:text-white transition-colors">Designer Sarees</a>
+                <a href="#" className="text-white/70 hover:text-klassico-gold transition-colors flex items-center">
+                  <ChevronRight className="w-4 h-4 mr-2" />
+                  <span>Sale</span>
+                </a>
               </li>
               <li>
-                <a href="#" className="text-white/70 hover:text-white transition-colors">Limited Editions</a>
+                <a href="#" className="text-white/70 hover:text-klassico-gold transition-colors flex items-center">
+                  <ChevronRight className="w-4 h-4 mr-2" />
+                  <span>Accessories</span>
+                </a>
               </li>
             </ul>
           </div>
           
           <div>
-            <h3 className="text-lg font-medium mb-6">Company</h3>
+            <h3 className="text-lg font-bold uppercase mb-6">Information</h3>
             <ul className="space-y-3">
               <li>
-                <a href="#" className="text-white/70 hover:text-white transition-colors">Our Story</a>
+                <a href="#" className="text-white/70 hover:text-klassico-gold transition-colors flex items-center">
+                  <ChevronRight className="w-4 h-4 mr-2" />
+                  <span>About Us</span>
+                </a>
               </li>
               <li>
-                <a href="#" className="text-white/70 hover:text-white transition-colors">Craftsmanship</a>
+                <a href="#" className="text-white/70 hover:text-klassico-gold transition-colors flex items-center">
+                  <ChevronRight className="w-4 h-4 mr-2" />
+                  <span>Contact Us</span>
+                </a>
               </li>
               <li>
-                <a href="#" className="text-white/70 hover:text-white transition-colors">Sustainability</a>
+                <a href="#" className="text-white/70 hover:text-klassico-gold transition-colors flex items-center">
+                  <ChevronRight className="w-4 h-4 mr-2" />
+                  <span>Terms & Conditions</span>
+                </a>
               </li>
               <li>
-                <a href="#" className="text-white/70 hover:text-white transition-colors">Store Locations</a>
+                <a href="#" className="text-white/70 hover:text-klassico-gold transition-colors flex items-center">
+                  <ChevronRight className="w-4 h-4 mr-2" />
+                  <span>Returns & Exchanges</span>
+                </a>
               </li>
               <li>
-                <a href="#" className="text-white/70 hover:text-white transition-colors">Careers</a>
+                <a href="#" className="text-white/70 hover:text-klassico-gold transition-colors flex items-center">
+                  <ChevronRight className="w-4 h-4 mr-2" />
+                  <span>Shipping & Delivery</span>
+                </a>
               </li>
             </ul>
           </div>
           
           <div>
-            <h3 className="text-lg font-medium mb-6">Customer Care</h3>
-            <ul className="space-y-3">
-              <li>
-                <a href="#" className="text-white/70 hover:text-white transition-colors">Contact Us</a>
+            <h3 className="text-lg font-bold uppercase mb-6">Contact</h3>
+            <ul className="space-y-4">
+              <li className="flex items-start">
+                <MapPin className="w-5 h-5 mr-3 text-klassico-gold flex-shrink-0 mt-0.5" />
+                <span className="text-white/70">
+                  123 Fashion Street, Design District, New Delhi, 110001, India
+                </span>
               </li>
-              <li>
-                <a href="#" className="text-white/70 hover:text-white transition-colors">FAQs</a>
+              <li className="flex items-center">
+                <Phone className="w-5 h-5 mr-3 text-klassico-gold flex-shrink-0" />
+                <a href="tel:+918910131099" className="text-white/70 hover:text-klassico-gold transition-colors">
+                  +91 8910 131 099
+                </a>
               </li>
-              <li>
-                <a href="#" className="text-white/70 hover:text-white transition-colors">Shipping & Returns</a>
-              </li>
-              <li>
-                <a href="#" className="text-white/70 hover:text-white transition-colors">Size Guide</a>
-              </li>
-              <li>
-                <a href="#" className="text-white/70 hover:text-white transition-colors">Product Care</a>
+              <li className="flex items-center">
+                <Mail className="w-5 h-5 mr-3 text-klassico-gold flex-shrink-0" />
+                <a href="mailto:info@klassico.com" className="text-white/70 hover:text-klassico-gold transition-colors">
+                  info@klassico.com
+                </a>
               </li>
             </ul>
           </div>
         </div>
-        
-        {/* Sustainability Badge */}
-        <div className="border-t border-white/10 pt-8 pb-10 flex flex-col md:flex-row items-center justify-center md:justify-between">
-          <div className="flex items-center mb-6 md:mb-0">
-            <div className="w-14 h-14 rounded-full border border-klassico-gold/30 flex items-center justify-center">
-              <div className="w-10 h-10 rounded-full bg-klassico-gold/20 flex items-center justify-center">
-                <span className="text-klassico-gold text-lg font-display">K</span>
-              </div>
-            </div>
-            <div className="ml-4">
-              <h4 className="text-lg font-display">Klassico Sustainability Promise</h4>
-              <p className="text-white/70 text-sm">Carbon-neutral shipping, eco-packaging, sustainable sourcing</p>
-            </div>
-          </div>
-          
-          <div className="flex items-center gap-2">
-            <img 
-              src="https://via.placeholder.com/40x40/D4AF37/FFFFFF?text=EC" 
-              alt="Eco Certified" 
-              className="w-10 h-10 rounded-full"
-            />
-            <img 
-              src="https://via.placeholder.com/40x40/D4AF37/FFFFFF?text=SF" 
-              alt="Sustainable Fashion" 
-              className="w-10 h-10 rounded-full"
-            />
-            <img 
-              src="https://via.placeholder.com/40x40/D4AF37/FFFFFF?text=FR" 
-              alt="Fair Trade" 
-              className="w-10 h-10 rounded-full"
-            />
-          </div>
-        </div>
-        
-        {/* Bottom Footer */}
-        <div className="border-t border-white/10 pt-8 text-center text-white/50 text-sm">
-          <div className="flex flex-col md:flex-row justify-center md:justify-between items-center">
-            <p>&copy; {new Date().getFullYear()} Klassico. All Rights Reserved.</p>
-            <div className="flex flex-wrap justify-center gap-6 mt-4 md:mt-0">
-              <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-              <a href="#" className="hover:text-white transition-colors">Cookie Policy</a>
+      </div>
+      
+      {/* Bottom Footer */}
+      <div className="border-t border-white/10 py-6">
+        <div className="container mx-auto px-4 md:px-8">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <p className="text-white/50 text-sm">&copy; {new Date().getFullYear()} Klassico. All Rights Reserved.</p>
+            <div className="flex space-x-6 mt-4 md:mt-0">
+              <img src="https://www.pepejeans.com/on/demandware.static/-/Library-Sites-Pepe_Jeans_-_Content_Library/default/dw92903e7a/images/footer/pj-visa.svg" alt="Visa" className="h-6" />
+              <img src="https://www.pepejeans.com/on/demandware.static/-/Library-Sites-Pepe_Jeans_-_Content_Library/default/dw3823deb4/images/footer/pj-mastercard.svg" alt="Mastercard" className="h-6" />
+              <img src="https://www.pepejeans.com/on/demandware.static/-/Library-Sites-Pepe_Jeans_-_Content_Library/default/dw95a2e483/images/footer/pj-paypal.svg" alt="PayPal" className="h-6" />
             </div>
           </div>
         </div>

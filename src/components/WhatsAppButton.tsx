@@ -30,7 +30,7 @@ const WhatsAppButton: React.FC<WhatsAppButtonProps> = ({
   return (
     <Button 
       onClick={handleWhatsAppClick}
-      className={className}
+      className={`uppercase font-bold text-xs ${className}`}
       variant={variant}
     >
       <MessageCircle className="mr-2" />
