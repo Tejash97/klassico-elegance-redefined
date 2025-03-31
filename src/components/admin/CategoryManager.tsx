@@ -15,6 +15,7 @@ import {
   DialogContent, 
   DialogHeader, 
   DialogTitle,
+  DialogDescription,
   DialogTrigger
 } from '@/components/ui/dialog';
 import { 
@@ -33,6 +34,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useForm } from 'react-hook-form';
 import { getCategories, Category } from '@/services/ProductService';
 import { toast } from 'sonner';
+import { useAuth } from '@/context/AuthContext';
 
 interface CategoryFormData {
   name: string;
@@ -44,6 +46,7 @@ const CategoryManager: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const queryClient = useQueryClient();
+  const { user } = useAuth();
 
   const { data: categories = [], isLoading, error } = useQuery({
     queryKey: ['categories'],
@@ -69,6 +72,11 @@ const CategoryManager: React.FC = () => {
   };
 
   const handleDelete = async (id: string) => {
+    if (!user) {
+      toast.error('You must be logged in to perform this action');
+      return;
+    }
+
     if (window.confirm('Are you sure you want to delete this category? All associated products will be affected.')) {
       const { error } = await supabase
         .from('categories')
@@ -77,7 +85,7 @@ const CategoryManager: React.FC = () => {
 
       if (error) {
         console.error('Error deleting category:', error);
-        toast.error('Failed to delete category');
+        toast.error('Failed to delete category: ' + error.message);
         return;
       }
       
@@ -106,6 +114,11 @@ const CategoryManager: React.FC = () => {
 
   const onSubmit = async (data: CategoryFormData) => {
     try {
+      if (!user) {
+        toast.error('You must be logged in to perform this action');
+        return;
+      }
+
       if (selectedCategory) {
         // Update existing category
         const { error } = await supabase
@@ -117,7 +130,11 @@ const CategoryManager: React.FC = () => {
           })
           .eq('id', selectedCategory.id);
 
-        if (error) throw error;
+        if (error) {
+          console.error('Error updating category:', error);
+          toast.error('Failed to update category: ' + error.message);
+          return;
+        }
         toast.success('Category updated successfully');
       } else {
         // Create new category
@@ -129,7 +146,11 @@ const CategoryManager: React.FC = () => {
             description: data.description,
           }]);
 
-        if (error) throw error;
+        if (error) {
+          console.error('Error creating category:', error);
+          toast.error('Failed to create category: ' + error.message);
+          return;
+        }
         toast.success('Category created successfully');
       }
 
@@ -139,7 +160,11 @@ const CategoryManager: React.FC = () => {
       
     } catch (error) {
       console.error('Error saving category:', error);
-      toast.error('Failed to save category');
+      if (error instanceof Error) {
+        toast.error('Failed to save category: ' + error.message);
+      } else {
+        toast.error('Failed to save category');
+      }
     }
   };
 
@@ -170,6 +195,9 @@ const CategoryManager: React.FC = () => {
               <DialogTitle>
                 {selectedCategory ? 'Edit Category' : 'Add New Category'}
               </DialogTitle>
+              <DialogDescription>
+                Fill in the details to {selectedCategory ? 'edit an existing' : 'create a new'} category.
+              </DialogDescription>
             </DialogHeader>
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">

@@ -1,4 +1,3 @@
-
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
@@ -29,39 +28,49 @@ export type Category = {
 };
 
 export const getCategories = async (): Promise<Category[]> => {
-  const { data, error } = await supabase
-    .from('categories')
-    .select('*')
-    .order('name');
-  
-  if (error) {
-    console.error('Error fetching categories:', error);
-    toast.error('Failed to load categories');
+  try {
+    const { data, error } = await supabase
+      .from('categories')
+      .select('*')
+      .order('name');
+    
+    if (error) {
+      console.error('Error fetching categories:', error);
+      toast.error('Failed to load categories: ' + error.message);
+      return [];
+    }
+    
+    return data || [];
+  } catch (error) {
+    console.error('Error in getCategories:', error);
     return [];
   }
-  
-  return data || [];
 };
 
 export const getProducts = async (): Promise<Product[]> => {
-  const { data, error } = await supabase
-    .from('products')
-    .select(`
-      *,
-      categories:category_id (name)
-    `)
-    .order('name');
-  
-  if (error) {
-    console.error('Error fetching products:', error);
-    toast.error('Failed to load products');
+  try {
+    const { data, error } = await supabase
+      .from('products')
+      .select(`
+        *,
+        categories:category_id (name)
+      `)
+      .order('name');
+    
+    if (error) {
+      console.error('Error fetching products:', error);
+      toast.error('Failed to load products: ' + error.message);
+      return [];
+    }
+    
+    return data.map(product => ({
+      ...product,
+      categoryName: product.categories?.name,
+    })) || [];
+  } catch (error) {
+    console.error('Error in getProducts:', error);
     return [];
   }
-  
-  return data.map(product => ({
-    ...product,
-    categoryName: product.categories?.name,
-  })) || [];
 };
 
 export const getProductsByCategory = async (categorySlug: string): Promise<Product[]> => {
@@ -134,75 +143,158 @@ export const getProductBySlug = async (slug: string): Promise<Product | null> =>
 };
 
 export const createProduct = async (product: Omit<Product, 'id' | 'created_at' | 'updated_at'>): Promise<Product | null> => {
-  const { data, error } = await supabase
-    .from('products')
-    .insert([product])
-    .select()
-    .single();
-  
-  if (error) {
-    console.error('Error creating product:', error);
-    toast.error('Failed to create product');
+  try {
+    const { data, error } = await supabase
+      .from('products')
+      .insert([product])
+      .select()
+      .single();
+    
+    if (error) {
+      console.error('Error creating product:', error);
+      toast.error('Failed to create product: ' + error.message);
+      return null;
+    }
+    
+    toast.success('Product created successfully');
+    return data;
+  } catch (error) {
+    console.error('Error in createProduct:', error);
+    if (error instanceof Error) {
+      toast.error('Failed to create product: ' + error.message);
+    } else {
+      toast.error('Failed to create product');
+    }
     return null;
   }
-  
-  toast.success('Product created successfully');
-  return data;
 };
 
 export const updateProduct = async (id: string, product: Partial<Omit<Product, 'id' | 'created_at' | 'updated_at'>>): Promise<Product | null> => {
-  const { data, error } = await supabase
-    .from('products')
-    .update(product)
-    .eq('id', id)
-    .select()
-    .single();
-  
-  if (error) {
-    console.error('Error updating product:', error);
-    toast.error('Failed to update product');
+  try {
+    const { data, error } = await supabase
+      .from('products')
+      .update(product)
+      .eq('id', id)
+      .select()
+      .single();
+    
+    if (error) {
+      console.error('Error updating product:', error);
+      toast.error('Failed to update product: ' + error.message);
+      return null;
+    }
+    
+    toast.success('Product updated successfully');
+    return data;
+  } catch (error) {
+    console.error('Error in updateProduct:', error);
+    if (error instanceof Error) {
+      toast.error('Failed to update product: ' + error.message);
+    } else {
+      toast.error('Failed to update product');
+    }
     return null;
   }
-  
-  toast.success('Product updated successfully');
-  return data;
 };
 
 export const deleteProduct = async (id: string): Promise<boolean> => {
-  const { error } = await supabase
-    .from('products')
-    .delete()
-    .eq('id', id);
-  
-  if (error) {
-    console.error('Error deleting product:', error);
-    toast.error('Failed to delete product');
+  try {
+    const { error } = await supabase
+      .from('products')
+      .delete()
+      .eq('id', id);
+    
+    if (error) {
+      console.error('Error deleting product:', error);
+      toast.error('Failed to delete product: ' + error.message);
+      return false;
+    }
+    
+    toast.success('Product deleted successfully');
+    return true;
+  } catch (error) {
+    console.error('Error in deleteProduct:', error);
+    if (error instanceof Error) {
+      toast.error('Failed to delete product: ' + error.message);
+    } else {
+      toast.error('Failed to delete product');
+    }
     return false;
   }
-  
-  toast.success('Product deleted successfully');
-  return true;
+};
+
+const ensureProductImagesBucketExists = async (): Promise<boolean> => {
+  try {
+    // Check if bucket exists
+    const { data: buckets, error: listError } = await supabase.storage.listBuckets();
+    
+    if (listError) {
+      console.error('Error listing buckets:', listError);
+      return false;
+    }
+    
+    const bucketExists = buckets.some(bucket => bucket.name === 'product-images');
+    
+    if (!bucketExists) {
+      // Create the bucket if it doesn't exist
+      const { error: createError } = await supabase.storage.createBucket('product-images', {
+        public: true
+      });
+      
+      if (createError) {
+        console.error('Error creating bucket:', createError);
+        return false;
+      }
+    }
+    
+    return true;
+  } catch (error) {
+    console.error('Error ensuring bucket exists:', error);
+    return false;
+  }
 };
 
 export const uploadProductImage = async (file: File, productId: string): Promise<string | null> => {
-  const fileExt = file.name.split('.').pop();
-  const filePath = `${productId}.${fileExt}`;
-  
-  const { error } = await supabase.storage
-    .from('product-images')
-    .upload(filePath, file, {
-      upsert: true,
-    });
-  
-  if (error) {
-    console.error('Error uploading image:', error);
-    toast.error('Failed to upload image');
+  try {
+    // Ensure bucket exists
+    const bucketReady = await ensureProductImagesBucketExists();
+    if (!bucketReady) {
+      toast.error('Failed to prepare storage for image upload');
+      return null;
+    }
+    
+    // Create a unique filename
+    const fileExt = file.name.split('.').pop();
+    const timestamp = new Date().getTime();
+    const filePath = `${productId}-${timestamp}.${fileExt}`;
+    
+    // Upload the file
+    const { error: uploadError } = await supabase.storage
+      .from('product-images')
+      .upload(filePath, file, {
+        upsert: true,
+        cacheControl: '3600',
+      });
+    
+    if (uploadError) {
+      console.error('Error uploading image:', uploadError);
+      toast.error('Failed to upload image: ' + uploadError.message);
+      return null;
+    }
+    
+    // Get the public URL
+    const { data } = supabase.storage
+      .from('product-images')
+      .getPublicUrl(filePath);
+    
+    return data.publicUrl;
+  } catch (error) {
+    console.error('Error in uploadProductImage:', error);
+    if (error instanceof Error) {
+      toast.error('Failed to upload image: ' + error.message);
+    } else {
+      toast.error('Failed to upload image');
+    }
     return null;
   }
-  
-  const { data } = supabase.storage
-    .from('product-images')
-    .getPublicUrl(filePath);
-  
-  return data.publicUrl;
 };

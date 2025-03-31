@@ -14,7 +14,6 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { X, Plus, Upload } from 'lucide-react';
@@ -35,6 +34,8 @@ import {
   Category 
 } from '@/services/ProductService';
 import { useForm } from 'react-hook-form';
+import { useAuth } from '@/context/AuthContext';
+import { toast } from 'sonner';
 
 interface ProductFormProps {
   product: Product | null;
@@ -57,7 +58,9 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onClose }) => {
   const [tags, setTags] = useState<string[]>([]);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
   const queryClient = useQueryClient();
+  const { user } = useAuth();
   
   const { data: categories = [] } = useQuery({
     queryKey: ['categories'],
@@ -141,8 +144,38 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onClose }) => {
     }
   };
 
+  // Handle drag and drop functionality
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      const file = e.dataTransfer.files[0];
+      setImageFile(file);
+      
+      // Create preview
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const onSubmit = async (data: ProductFormData) => {
     try {
+      if (!user) {
+        toast.error('You must be logged in to perform this action');
+        return;
+      }
+      
+      setIsUploading(true);
+      
       const productData = {
         name: data.name,
         slug: data.slug,
@@ -160,24 +193,49 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onClose }) => {
       if (product) {
         // Update existing product
         savedProduct = await updateProduct(product.id, productData);
+        if (!savedProduct) {
+          toast.error('Failed to update product');
+          setIsUploading(false);
+          return;
+        }
       } else {
         // Create new product
         savedProduct = await createProduct(productData);
+        if (!savedProduct) {
+          toast.error('Failed to create product');
+          setIsUploading(false);
+          return;
+        }
       }
 
       // If we have a new image, upload it
       if (savedProduct && imageFile) {
-        const imageUrl = await uploadProductImage(imageFile, savedProduct.id);
-        if (imageUrl) {
-          await updateProduct(savedProduct.id, { image_url: imageUrl });
+        try {
+          const imageUrl = await uploadProductImage(imageFile, savedProduct.id);
+          if (imageUrl) {
+            await updateProduct(savedProduct.id, { image_url: imageUrl });
+          } else {
+            toast.error('Image upload failed');
+          }
+        } catch (error) {
+          console.error('Error uploading image:', error);
+          toast.error('Image upload failed');
         }
       }
 
       queryClient.invalidateQueries({ queryKey: ['products'] });
+      toast.success(product ? 'Product updated successfully' : 'Product created successfully');
       onClose();
       
     } catch (error) {
       console.error('Error saving product:', error);
+      if (error instanceof Error) {
+        toast.error(`Error saving product: ${error.message}`);
+      } else {
+        toast.error('Error saving product');
+      }
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -353,15 +411,26 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onClose }) => {
                   </Button>
                 </div>
               ) : (
-                <div className="border-2 border-dashed border-muted-foreground/20 rounded-md p-6 text-center">
+                <div 
+                  className="border-2 border-dashed border-muted-foreground/20 rounded-md p-6 text-center relative h-[200px] cursor-pointer"
+                  onDragOver={handleDragOver}
+                  onDrop={handleDrop}
+                  onClick={() => {
+                    const input = document.getElementById('product-image-input');
+                    if (input) {
+                      input.click();
+                    }
+                  }}
+                >
                   <Upload className="mx-auto h-10 w-10 text-muted-foreground" />
                   <p className="mt-2 text-sm text-muted-foreground">
                     Click to upload or drag and drop
                   </p>
                   <Input
+                    id="product-image-input"
                     type="file"
                     accept="image/*"
-                    className="absolute inset-0 opacity-0 cursor-pointer"
+                    className="hidden"
                     onChange={handleImageChange}
                   />
                 </div>
@@ -405,11 +474,11 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onClose }) => {
         </div>
 
         <div className="flex justify-end gap-2">
-          <Button type="button" variant="outline" onClick={onClose}>
+          <Button type="button" variant="outline" onClick={onClose} disabled={isUploading}>
             Cancel
           </Button>
-          <Button type="submit">
-            {product ? 'Update Product' : 'Create Product'}
+          <Button type="submit" disabled={isUploading}>
+            {isUploading ? 'Saving...' : (product ? 'Update Product' : 'Create Product')}
           </Button>
         </div>
       </form>
