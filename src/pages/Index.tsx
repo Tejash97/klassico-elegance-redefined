@@ -8,7 +8,7 @@ import Sustainability from '@/components/Sustainability';
 import Testimonials from '@/components/Testimonials';
 import CTASection from '@/components/CTASection';
 import Footer from '@/components/Footer';
-import PremiumBanners from '@/components/PremiumBanners';
+import Exclusivity from '@/components/Exclusivity';
 import { useToast } from '@/hooks/use-toast';
 import { Toaster } from '@/components/ui/toaster';
 
@@ -65,20 +65,9 @@ const Index: React.FC = () => {
     <div className="min-h-screen bg-white">
       <Navbar />
       <Hero />
-      <div className="pt-20">
-        <div className="container mx-auto px-4 md:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold uppercase tracking-wide">Featured Collections</h2>
-            <div className="w-20 h-1 bg-klassico-gold mx-auto mt-4 mb-6"></div>
-            <p className="text-gray-600 max-w-3xl mx-auto">
-              Discover our premium collections, crafted with meticulous attention to detail for the modern connoisseur
-            </p>
-          </div>
-        </div>
-        <PremiumBanners />
-      </div>
       <Collections />
       <Craftsmanship />
+      <Exclusivity />
       <Sustainability />
       <Testimonials />
       <CTASection />
