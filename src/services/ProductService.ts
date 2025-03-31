@@ -1,3 +1,4 @@
+
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
@@ -144,6 +145,9 @@ export const getProductBySlug = async (slug: string): Promise<Product | null> =>
 
 export const createProduct = async (product: Omit<Product, 'id' | 'created_at' | 'updated_at'>): Promise<Product | null> => {
   try {
+    // Log the product data for debugging
+    console.log('Creating product with data:', product);
+    
     const { data, error } = await supabase
       .from('products')
       .insert([product])
@@ -157,6 +161,7 @@ export const createProduct = async (product: Omit<Product, 'id' | 'created_at' |
     }
     
     toast.success('Product created successfully');
+    console.log('Product created successfully:', data);
     return data;
   } catch (error) {
     console.error('Error in createProduct:', error);
@@ -171,6 +176,8 @@ export const createProduct = async (product: Omit<Product, 'id' | 'created_at' |
 
 export const updateProduct = async (id: string, product: Partial<Omit<Product, 'id' | 'created_at' | 'updated_at'>>): Promise<Product | null> => {
   try {
+    console.log('Updating product with ID:', id, 'and data:', product);
+    
     const { data, error } = await supabase
       .from('products')
       .update(product)
@@ -185,6 +192,7 @@ export const updateProduct = async (id: string, product: Partial<Omit<Product, '
     }
     
     toast.success('Product updated successfully');
+    console.log('Product updated successfully:', data);
     return data;
   } catch (error) {
     console.error('Error in updateProduct:', error);
@@ -199,6 +207,8 @@ export const updateProduct = async (id: string, product: Partial<Omit<Product, '
 
 export const deleteProduct = async (id: string): Promise<boolean> => {
   try {
+    console.log('Deleting product with ID:', id);
+    
     const { error } = await supabase
       .from('products')
       .delete()
@@ -211,6 +221,7 @@ export const deleteProduct = async (id: string): Promise<boolean> => {
     }
     
     toast.success('Product deleted successfully');
+    console.log('Product deleted successfully');
     return true;
   } catch (error) {
     console.error('Error in deleteProduct:', error);
@@ -223,45 +234,9 @@ export const deleteProduct = async (id: string): Promise<boolean> => {
   }
 };
 
-const ensureProductImagesBucketExists = async (): Promise<boolean> => {
-  try {
-    // Check if bucket exists
-    const { data: buckets, error: listError } = await supabase.storage.listBuckets();
-    
-    if (listError) {
-      console.error('Error listing buckets:', listError);
-      return false;
-    }
-    
-    const bucketExists = buckets.some(bucket => bucket.name === 'product-images');
-    
-    if (!bucketExists) {
-      // Create the bucket if it doesn't exist
-      const { error: createError } = await supabase.storage.createBucket('product-images', {
-        public: true
-      });
-      
-      if (createError) {
-        console.error('Error creating bucket:', createError);
-        return false;
-      }
-    }
-    
-    return true;
-  } catch (error) {
-    console.error('Error ensuring bucket exists:', error);
-    return false;
-  }
-};
-
 export const uploadProductImage = async (file: File, productId: string): Promise<string | null> => {
   try {
-    // Ensure bucket exists
-    const bucketReady = await ensureProductImagesBucketExists();
-    if (!bucketReady) {
-      toast.error('Failed to prepare storage for image upload');
-      return null;
-    }
+    console.log('Uploading image for product ID:', productId, 'File:', file.name, 'Size:', file.size);
     
     // Create a unique filename
     const fileExt = file.name.split('.').pop();
@@ -269,7 +244,7 @@ export const uploadProductImage = async (file: File, productId: string): Promise
     const filePath = `${productId}-${timestamp}.${fileExt}`;
     
     // Upload the file
-    const { error: uploadError } = await supabase.storage
+    const { data, error: uploadError } = await supabase.storage
       .from('product-images')
       .upload(filePath, file, {
         upsert: true,
@@ -282,12 +257,15 @@ export const uploadProductImage = async (file: File, productId: string): Promise
       return null;
     }
     
+    console.log('File uploaded successfully:', data?.path);
+    
     // Get the public URL
-    const { data } = supabase.storage
+    const { data: urlData } = supabase.storage
       .from('product-images')
       .getPublicUrl(filePath);
     
-    return data.publicUrl;
+    console.log('Image public URL:', urlData.publicUrl);
+    return urlData.publicUrl;
   } catch (error) {
     console.error('Error in uploadProductImage:', error);
     if (error instanceof Error) {

@@ -45,6 +45,7 @@ interface CategoryFormData {
 const CategoryManager: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const queryClient = useQueryClient();
   const { user } = useAuth();
 
@@ -119,38 +120,51 @@ const CategoryManager: React.FC = () => {
         return;
       }
 
+      setIsSubmitting(true);
+      console.log('Form data submitted:', data);
+
       if (selectedCategory) {
+        console.log('Updating existing category:', selectedCategory.id);
         // Update existing category
-        const { error } = await supabase
+        const { data: updatedData, error } = await supabase
           .from('categories')
           .update({
             name: data.name,
             slug: data.slug,
             description: data.description,
           })
-          .eq('id', selectedCategory.id);
+          .eq('id', selectedCategory.id)
+          .select();
 
         if (error) {
           console.error('Error updating category:', error);
           toast.error('Failed to update category: ' + error.message);
+          setIsSubmitting(false);
           return;
         }
+        
+        console.log('Category updated successfully:', updatedData);
         toast.success('Category updated successfully');
       } else {
+        console.log('Creating new category');
         // Create new category
-        const { error } = await supabase
+        const { data: createdData, error } = await supabase
           .from('categories')
           .insert([{
             name: data.name,
             slug: data.slug,
             description: data.description,
-          }]);
+          }])
+          .select();
 
         if (error) {
           console.error('Error creating category:', error);
           toast.error('Failed to create category: ' + error.message);
+          setIsSubmitting(false);
           return;
         }
+        
+        console.log('Category created successfully:', createdData);
         toast.success('Category created successfully');
       }
 
@@ -165,6 +179,8 @@ const CategoryManager: React.FC = () => {
       } else {
         toast.error('Failed to save category');
       }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -257,11 +273,11 @@ const CategoryManager: React.FC = () => {
                 />
 
                 <div className="flex justify-end gap-2 pt-2">
-                  <Button type="button" variant="outline" onClick={handleFormClose}>
+                  <Button type="button" variant="outline" onClick={handleFormClose} disabled={isSubmitting}>
                     Cancel
                   </Button>
-                  <Button type="submit">
-                    {selectedCategory ? 'Update Category' : 'Create Category'}
+                  <Button type="submit" disabled={isSubmitting}>
+                    {isSubmitting ? 'Saving...' : (selectedCategory ? 'Update Category' : 'Create Category')}
                   </Button>
                 </div>
               </form>

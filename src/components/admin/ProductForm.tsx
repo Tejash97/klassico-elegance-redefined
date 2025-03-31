@@ -59,6 +59,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onClose }) => {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
   const queryClient = useQueryClient();
   const { user } = useAuth();
   
@@ -148,14 +149,28 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onClose }) => {
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
   };
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
+    setIsDragging(false);
     
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       const file = e.dataTransfer.files[0];
+      
+      if (!file.type.startsWith('image/')) {
+        toast.error('Please upload an image file');
+        return;
+      }
+      
       setImageFile(file);
       
       // Create preview
@@ -174,7 +189,25 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onClose }) => {
         return;
       }
       
+      // Validate required fields
+      if (!data.name) {
+        toast.error('Product name is required');
+        return;
+      }
+      
+      if (!data.category_id) {
+        toast.error('Please select a category');
+        return;
+      }
+      
+      if (!data.price || isNaN(parseFloat(data.price))) {
+        toast.error('Please enter a valid price');
+        return;
+      }
+      
       setIsUploading(true);
+      console.log('Form data submitted:', data);
+      console.log('Tags:', tags);
       
       const productData = {
         name: data.name,
@@ -188,6 +221,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onClose }) => {
         image_url: product?.image_url || null,
       };
 
+      console.log('Preparing to save product with data:', productData);
+      
       let savedProduct;
       
       if (product) {
@@ -208,12 +243,18 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onClose }) => {
         }
       }
 
+      console.log('Product saved successfully:', savedProduct);
+
       // If we have a new image, upload it
       if (savedProduct && imageFile) {
+        console.log('Uploading image for product:', savedProduct.id);
         try {
           const imageUrl = await uploadProductImage(imageFile, savedProduct.id);
+          console.log('Image uploaded, URL:', imageUrl);
+          
           if (imageUrl) {
             await updateProduct(savedProduct.id, { image_url: imageUrl });
+            console.log('Product updated with image URL');
           } else {
             toast.error('Image upload failed');
           }
@@ -412,8 +453,9 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onClose }) => {
                 </div>
               ) : (
                 <div 
-                  className="border-2 border-dashed border-muted-foreground/20 rounded-md p-6 text-center relative h-[200px] cursor-pointer"
+                  className={`border-2 border-dashed ${isDragging ? 'border-primary bg-primary/5' : 'border-muted-foreground/20'} rounded-md p-6 text-center relative h-[200px] cursor-pointer transition-colors duration-200`}
                   onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
                   onDrop={handleDrop}
                   onClick={() => {
                     const input = document.getElementById('product-image-input');
@@ -425,6 +467,9 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onClose }) => {
                   <Upload className="mx-auto h-10 w-10 text-muted-foreground" />
                   <p className="mt-2 text-sm text-muted-foreground">
                     Click to upload or drag and drop
+                  </p>
+                  <p className="mt-1 text-xs text-muted-foreground/80">
+                    JPG, PNG or GIF (Max 5MB)
                   </p>
                   <Input
                     id="product-image-input"
