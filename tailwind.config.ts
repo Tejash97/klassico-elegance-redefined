@@ -63,14 +63,14 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Klassico custom colors
+				// Klassico custom colors - refined for premium look
 				klassico: {
-					charcoal: '#232323',
+					charcoal: '#1A1A1A',
 					gold: '#D4AF37',
 					ivory: '#FFFFF0',
-					dark: '#1A1A1A',
-					light: '#F8F8F8',
-					muted: '#8A8A8A',
+					dark: '#121212',
+					light: '#F9F9F9',
+					muted: '#6D6D6D',
 				}
 			},
 			borderRadius: {
@@ -97,15 +97,15 @@ export default {
 					'100%': { opacity: '1' },
 				},
 				'fade-up': {
-					'0%': { opacity: '0', transform: 'translateY(10px)' },
+					'0%': { opacity: '0', transform: 'translateY(30px)' },
 					'100%': { opacity: '1', transform: 'translateY(0)' },
 				},
 				'fade-down': {
-					'0%': { opacity: '0', transform: 'translateY(-10px)' },
+					'0%': { opacity: '0', transform: 'translateY(-30px)' },
 					'100%': { opacity: '1', transform: 'translateY(0)' },
 				},
 				'scale-in': {
-					'0%': { opacity: '0', transform: 'scale(0.98)' },
+					'0%': { opacity: '0', transform: 'scale(0.95)' },
 					'100%': { opacity: '1', transform: 'scale(1)' },
 				},
 				'blur-in': {
@@ -120,11 +120,11 @@ export default {
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
-				'fade-in': 'fade-in 0.7s ease-in-out forwards',
-				'fade-up': 'fade-up 0.7s ease-out forwards',
-				'fade-down': 'fade-down 0.7s ease-out forwards',
-				'scale-in': 'scale-in 0.7s ease-out forwards',
-				'blur-in': 'blur-in 0.7s ease-out forwards',
+				'fade-in': 'fade-in 1s ease-in-out forwards',
+				'fade-up': 'fade-up 1s ease-out forwards',
+				'fade-down': 'fade-down 1s ease-out forwards',
+				'scale-in': 'scale-in 1s ease-out forwards',
+				'blur-in': 'blur-in 1s ease-out forwards',
 				'float': 'float 3s ease-in-out infinite',
 			},
 			transitionDuration: {
@@ -132,8 +132,8 @@ export default {
 				'3000': '3000ms',
 			},
 			boxShadow: {
-				'elegant': '0 10px 30px -10px rgba(0, 0, 0, 0.1)',
-				'golden': '0 5px 20px -5px rgba(212, 175, 55, 0.3)',
+				'elegant': '0 10px 30px -10px rgba(0, 0, 0, 0.05)',
+				'golden': '0 5px 20px -5px rgba(212, 175, 55, 0.2)',
 			},
 			backdropBlur: {
 				xs: '2px',

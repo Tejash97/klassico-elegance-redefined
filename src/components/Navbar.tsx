@@ -35,13 +35,13 @@ const Navbar: React.FC = () => {
   return (
     <header 
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        isScrolled ? "py-2 bg-white shadow-md" : "py-3 bg-white"
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
+        isScrolled ? "py-2 bg-white shadow-sm" : "py-3 bg-white/80 backdrop-blur-md"
       )}
     >
       {/* Top announcement bar */}
-      <div className="hidden md:block bg-klassico-gold text-white text-center text-xs py-1 px-4">
-        Free shipping on all orders over ₹1999 | Use code KLASSICO20 for 20% off your first order
+      <div className="hidden md:block bg-klassico-charcoal text-white text-center text-xs py-1.5 px-4 tracking-wider">
+        Free shipping on all orders over ₹1999 | New Collection Now Available
       </div>
       
       <div className="container mx-auto px-4">
@@ -49,29 +49,29 @@ const Navbar: React.FC = () => {
           {/* Logo */}
           <Link 
             to="/" 
-            className="relative z-10 text-2xl font-bold uppercase tracking-widest text-klassico-charcoal"
+            className="relative z-10 text-2xl font-serif font-light uppercase tracking-widest text-klassico-charcoal"
           >
             Klassico
           </Link>
           
           {/* Desktop Navigation */}
           <nav className="hidden md:block">
-            <ul className="flex space-x-6">
+            <ul className="flex space-x-8">
               {categories.map((category) => (
                 <li key={category.name} className="group relative">
-                  <button className="flex items-center space-x-1 py-4 text-sm uppercase font-medium tracking-wide text-klassico-charcoal group-hover:text-klassico-gold transition-colors">
+                  <button className="flex items-center space-x-1 py-4 text-sm uppercase tracking-widest font-light text-klassico-charcoal group-hover:text-klassico-gold transition-colors">
                     <span>{category.name}</span>
                     <ChevronDown size={14} />
                   </button>
                   
                   {/* Dropdown */}
-                  <div className="absolute left-0 top-full bg-white shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 min-w-48 z-50">
+                  <div className="absolute left-0 top-full bg-white shadow-sm opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 min-w-48 z-50">
                     <div className="grid grid-cols-1 p-4">
                       {category.submenu.map((item) => (
                         <Link 
                           key={item} 
                           to={`/category/${item.toLowerCase()}`}
-                          className="py-2 text-sm text-klassico-charcoal hover:text-klassico-gold transition-colors whitespace-nowrap"
+                          className="py-2 text-sm text-klassico-charcoal hover:text-klassico-gold transition-colors whitespace-nowrap tracking-wider"
                         >
                           {item}
                         </Link>
@@ -83,7 +83,7 @@ const Navbar: React.FC = () => {
               <li>
                 <Link 
                   to="/about" 
-                  className="py-4 text-sm uppercase font-medium tracking-wide text-klassico-charcoal hover:text-klassico-gold transition-colors"
+                  className="py-4 text-sm uppercase tracking-widest font-light text-klassico-charcoal hover:text-klassico-gold transition-colors"
                 >
                   About
                 </Link>
@@ -116,7 +116,7 @@ const Navbar: React.FC = () => {
               href="https://wa.me/918910131099"
               target="_blank" 
               rel="noopener noreferrer"
-              className="hidden lg:flex items-center px-4 py-2 text-xs uppercase font-bold bg-klassico-gold text-white hover:bg-klassico-charcoal transition-colors"
+              className="hidden lg:flex items-center px-4 py-2 text-xs uppercase font-light tracking-widest bg-klassico-charcoal text-white hover:bg-klassico-gold transition-colors duration-500"
             >
               Order via WhatsApp
             </a>
@@ -139,7 +139,7 @@ const Navbar: React.FC = () => {
       
       {/* Search Overlay */}
       <div className={cn(
-        "absolute top-full left-0 right-0 bg-white shadow-md transition-all duration-300 overflow-hidden",
+        "absolute top-full left-0 right-0 bg-white shadow-sm transition-all duration-300 overflow-hidden",
         isSearchOpen ? "h-16" : "h-0"
       )}>
         <div className="container mx-auto px-4 h-full">
@@ -168,19 +168,19 @@ const Navbar: React.FC = () => {
             <input 
               type="text" 
               placeholder="Search for products..." 
-              className="w-full border border-gray-200 rounded px-4 py-2 text-sm"
+              className="w-full border border-gray-200 rounded-none px-4 py-2 text-sm"
             />
           </div>
           
           {categories.map((category) => (
             <div key={category.name} className="mb-4">
-              <h3 className="text-sm font-bold uppercase mb-2">{category.name}</h3>
+              <h3 className="text-sm font-light uppercase tracking-widest mb-2">{category.name}</h3>
               <ul className="space-y-2 pl-2">
                 {category.submenu.map((item) => (
                   <li key={item}>
                     <Link 
                       to={`/category/${item.toLowerCase()}`}
-                      className="text-sm text-gray-600"
+                      className="text-sm text-gray-600 tracking-wider"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       {item}
@@ -194,7 +194,7 @@ const Navbar: React.FC = () => {
           <div className="border-t border-gray-200 pt-4 mt-4">
             <Link 
               to="/about" 
-              className="block text-sm font-medium mb-3"
+              className="block text-sm font-light uppercase tracking-widest mb-3"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               About
@@ -203,7 +203,7 @@ const Navbar: React.FC = () => {
               href="https://wa.me/918910131099"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center px-4 py-2 bg-klassico-gold text-white text-sm uppercase font-medium"
+              className="flex items-center justify-center px-4 py-2 bg-klassico-charcoal text-white text-xs uppercase tracking-widest font-light"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Order via WhatsApp
