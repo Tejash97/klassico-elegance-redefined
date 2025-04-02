@@ -8,7 +8,9 @@ import Sustainability from '@/components/Sustainability';
 import Testimonials from '@/components/Testimonials';
 import CTASection from '@/components/CTASection';
 import Footer from '@/components/Footer';
-import Exclusivity from '@/components/Exclusivity';
+import CategoryBanner from '@/components/CategoryBanner';
+import QualitySection from '@/components/QualitySection';
+import WhyChooseUs from '@/components/WhyChooseUs';
 import { useToast } from '@/hooks/use-toast';
 import { Toaster } from '@/components/ui/toaster';
 
@@ -65,9 +67,31 @@ const Index: React.FC = () => {
     <div className="min-h-screen bg-white">
       <Navbar />
       <Hero />
+      
+      {/* Category Banners */}
+      <section className="py-12">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <CategoryBanner 
+              image="/lovable-uploads/ee7c48fa-1c75-451d-8eba-e65d8dcb5255.png"
+              title="Men's Clothing"
+              category="men"
+              isNew={true}
+            />
+            <CategoryBanner 
+              image="/lovable-uploads/0c11fcc5-eb56-4946-882e-0d40855724e2.png"
+              title="Women's Clothing"
+              category="women"
+              isNew={true}
+            />
+          </div>
+        </div>
+      </section>
+      
       <Collections />
+      <QualitySection />
+      <WhyChooseUs />
       <Craftsmanship />
-      <Exclusivity />
       <Sustainability />
       <Testimonials />
       <CTASection />

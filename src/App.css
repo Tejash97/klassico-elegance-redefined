@@ -47,3 +47,76 @@
   transform: translateY(-5px);
   box-shadow: 0 20px 40px -20px rgba(0,0,0,0.1);
 }
+
+/* Hoffmen-specific styles */
+.hoffmen-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 2rem;
+  background-color: #000;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.875rem;
+  font-weight: 400;
+  transition: background-color 0.3s;
+}
+
+.hoffmen-button:hover {
+  background-color: #e11d48;
+}
+
+/* Hover underline animation */
+.hover-underline {
+  position: relative;
+}
+
+.hover-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s ease;
+}
+
+.hover-underline:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Cart badge */
+.cart-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 50%;
+  background-color: #e11d48;
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Image zoom effect */
+.zoom-container {
+  overflow: hidden;
+}
+
+.zoom-image {
+  transition: transform 1s ease;
+}
+
+.zoom-container:hover .zoom-image {
+  transform: scale(1.05);
+}

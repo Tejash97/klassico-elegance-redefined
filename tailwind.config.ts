@@ -63,10 +63,11 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Klassico custom colors - refined for premium look
+				// Klassico custom colors - refined for Hoffmen-inspired look
 				klassico: {
-					charcoal: '#1A1A1A',
+					charcoal: '#000000',
 					gold: '#D4AF37',
+					red: '#e11d48',
 					ivory: '#FFFFF0',
 					dark: '#121212',
 					light: '#F9F9F9',
