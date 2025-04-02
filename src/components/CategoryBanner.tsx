@@ -28,7 +28,7 @@ const CategoryBanner: React.FC<CategoryBannerProps> = ({
       
       {isNew && (
         <div className="absolute top-6 left-6">
-          <div className="px-4 py-1 bg-black text-white text-sm font-light uppercase tracking-wider">
+          <div className="px-4 py-1 bg-red-600 text-white text-sm font-light uppercase tracking-wider">
             New Arrival
           </div>
         </div>

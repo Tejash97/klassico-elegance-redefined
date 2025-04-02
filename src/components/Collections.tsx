@@ -52,24 +52,21 @@ const Collections: React.FC = () => {
     <section id="collections" className="py-24 bg-klassico-light">
       <div className="container mx-auto px-4 md:px-8">
         <div className="text-center mb-16">
-          <span className="tag opacity-0 animate-fade-up">Luxury Collections</span>
-          <h2 className="section-title opacity-0 animate-fade-up stagger-1">Timeless Elegance</h2>
-          <p className="section-subtitle opacity-0 animate-fade-up stagger-2">
-            Handcrafted with premium materials for those who appreciate the finest details
-          </p>
+          <h2 className="text-6xl font-bold uppercase mb-6">Collection</h2>
+          <div className="w-20 h-1 bg-red-600 mx-auto mb-12"></div>
         </div>
 
         {/* Category Filters */}
-        <div className="flex justify-center mb-16 opacity-0 animate-fade-up stagger-3 overflow-x-auto">
-          <div className="inline-flex border border-klassico-gold/30 rounded-full p-1 shadow-golden">
+        <div className="flex justify-center mb-16 overflow-x-auto">
+          <div className="inline-flex border-b border-gray-200 p-1">
             {categories.map((category) => (
               <button
                 key={category.id}
                 className={cn(
-                  "px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 whitespace-nowrap",
+                  "px-8 py-2 text-sm font-medium uppercase transition-all duration-300 whitespace-nowrap mx-2",
                   activeCategory === category.slug 
-                    ? "bg-klassico-gold text-white shadow-sm" 
-                    : "hover:bg-klassico-gold/5 text-klassico-charcoal"
+                    ? "text-red-600 border-b-2 border-red-600" 
+                    : "text-gray-600 hover:text-black"
                 )}
                 onClick={() => setActiveCategory(category.slug)}
               >
@@ -80,7 +77,7 @@ const Collections: React.FC = () => {
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {isLoading ? (
             <div className="col-span-full text-center py-12">
               <div className="inline-flex items-center justify-center h-16 w-16 rounded-full bg-klassico-light animate-pulse">
@@ -104,8 +101,7 @@ const Collections: React.FC = () => {
                 style={{ transitionDelay: `${(index * 100)}ms` }}
               >
                 <Link to={`/product/${product.slug}`}>
-                  <div className="relative mb-5 overflow-hidden rounded-md shadow-elegant group-hover:shadow-golden transition-shadow duration-300">
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="relative mb-4 overflow-hidden">
                     {product.image_url ? (
                       <img 
                         src={product.image_url} 
@@ -118,56 +114,33 @@ const Collections: React.FC = () => {
                       </div>
                     )}
                     
-                    {/* Premium badge */}
-                    {product.featured && (
-                      <div className="absolute top-3 left-0 z-20 bg-klassico-gold text-white py-1 px-4 text-xs font-bold tracking-wider shadow-md">
-                        PREMIUM
-                      </div>
-                    )}
-                    
                     {/* Quick actions */}
-                    <div className="absolute bottom-0 left-0 right-0 z-20 p-5 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                    <div className="absolute bottom-0 left-0 right-0 z-20 p-4 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
                       <WhatsAppButton 
                         productName={product.name}
-                        className="w-full shadow-lg hover:shadow-xl transition-shadow"
+                        className="w-full bg-red-600 hover:bg-black shadow-lg hover:shadow-xl transition-shadow"
                       />
                     </div>
-                    
-                    {/* Tags */}
-                    {product.tags && product.tags.length > 0 && (
-                      <div className="absolute top-4 right-4 z-20 flex flex-wrap gap-2 justify-end">
-                        {product.tags.map((tag, i) => (
-                          <span key={i} className="py-1 px-3 text-xs font-medium bg-white/90 backdrop-blur-sm rounded-full shadow-sm">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    )}
                   </div>
                 </Link>
                 
-                <Link to={`/product/${product.slug}`} className="group-hover:text-klassico-gold transition-colors duration-300">
-                  <h3 className="font-display text-xl mb-1">{product.name}</h3>
+                <Link to={`/product/${product.slug}`} className="block text-center">
+                  <h3 className="text-lg font-medium mb-1">{product.name}</h3>
+                  <p className="text-red-600 font-medium">{formatPrice(product.price)}</p>
                 </Link>
-                <div className="flex justify-between items-center">
-                  <p className="text-klassico-gold font-medium">{formatPrice(product.price)}</p>
-                  <Link to={`/product/${product.slug}`} className="text-klassico-muted hover:text-klassico-gold">
-                    <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-                  </Link>
-                </div>
               </div>
             ))
           )}
         </div>
         
         {/* View All Button */}
-        <div className="text-center mt-16 opacity-0 animate-fade-up stagger-5">
+        <div className="text-center mt-16">
           <Link 
             to={`/category/${activeCategory}`} 
-            className="btn-primary group inline-flex items-center gap-2"
+            className="inline-flex items-center text-red-600 hover:text-black"
           >
-            <span>View All Collections</span>
-            <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+            <span className="mr-2 uppercase text-sm font-medium">View All Products</span>
+            <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </div>

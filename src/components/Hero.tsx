@@ -25,8 +25,11 @@ const Hero: React.FC = () => {
       <div className="relative z-10 container mx-auto px-4 md:px-8 text-center">
         <div className="space-y-6 max-w-4xl mx-auto">
           <h1 className="text-white text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold opacity-0 animate-fade-up stagger-2">
-            Find your fit, find your tribe.
+            KLASSICO
           </h1>
+          <p className="text-white text-xl md:text-2xl opacity-0 animate-fade-up stagger-3">
+            Premium quality clothing for the modern individual
+          </p>
           
           <div className="pt-10 flex flex-col sm:flex-row items-center justify-center gap-4 opacity-0 animate-fade-up stagger-4">
             <Link 
@@ -36,10 +39,10 @@ const Hero: React.FC = () => {
               Our Collections
             </Link>
             <Link 
-              to="/stores" 
+              to="/about" 
               className="px-10 py-3 bg-black text-white uppercase tracking-widest text-sm hover:bg-red-600 transition-colors duration-500"
             >
-              Our Stores
+              About Us
             </Link>
           </div>
         </div>

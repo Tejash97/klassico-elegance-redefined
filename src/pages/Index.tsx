@@ -29,7 +29,7 @@ const Index: React.FC = () => {
     if (!hasSeenWelcome) {
       setTimeout(() => {
         toast({
-          title: "Welcome to Klassico",
+          title: "Welcome to KLASSICO",
           description: "Discover our premium collections, handcrafted for the modern connoisseur",
           duration: 5000,
         });

@@ -19,7 +19,7 @@ const QualitySection: React.FC = () => {
       <div className="container mx-auto px-4 md:px-8 relative z-10">
         <div className="max-w-xl">
           <h2 className="text-4xl md:text-5xl font-light text-white mb-6">
-            Quality Products At Affordable Prices
+            KLASSICO Quality Products <br />At Affordable Prices
           </h2>
           
           <Link 

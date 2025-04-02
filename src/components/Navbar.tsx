@@ -34,10 +34,10 @@ const Navbar: React.FC = () => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
-      {/* Top red bar with "Since 1991" and social icons */}
+      {/* Top red bar with "Since 2019" and social icons */}
       <div className="bg-red-600 text-white py-2 px-4">
         <div className="container mx-auto flex justify-between items-center">
-          <div className="text-sm">Since 1991</div>
+          <div className="text-sm">Since 2019</div>
           <div className="flex space-x-4">
             <a href="#" aria-label="Facebook" className="hover:text-gray-200 transition-colors">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
@@ -68,7 +68,7 @@ const Navbar: React.FC = () => {
             to="/" 
             className="relative z-10 text-2xl font-bold uppercase tracking-wider"
           >
-            <img src="/lovable-uploads/31dd19d2-85df-4cc4-9417-032802965c0e.png" alt="Klassico" className="h-10" />
+            KLASSICO
           </Link>
           
           {/* Desktop Navigation - Horizontal menu with simple hover effect */}
@@ -110,22 +110,6 @@ const Navbar: React.FC = () => {
                     ))}
                   </div>
                 </div>
-              </li>
-              <li>
-                <Link 
-                  to="/stores" 
-                  className="py-2 text-sm uppercase tracking-wider text-black hover:text-red-600 transition-colors"
-                >
-                  Store Locator
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/faq" 
-                  className="py-2 text-sm uppercase tracking-wider text-black hover:text-red-600 transition-colors"
-                >
-                  FAQ
-                </Link>
               </li>
               <li>
                 <Link 
