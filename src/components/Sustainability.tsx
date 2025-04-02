@@ -32,7 +32,7 @@ const Sustainability: React.FC = () => {
             <div className="relative">
               <div className="absolute -top-6 -left-6 w-full h-full border border-klassico-gold/30 rounded-sm -z-10"></div>
               <img 
-                src="https://images.unsplash.com/photo-1473188588951-666fce8e7c68?q=80&w=2074&auto=format&fit=crop" 
+                src="https://images.unsplash.com/photo-1601924638867-3a6de6b7a500?q=80&w=2670&auto=format&fit=crop" 
                 alt="Sustainable production" 
                 className="w-full rounded-sm"
               />

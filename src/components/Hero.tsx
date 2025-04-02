@@ -15,7 +15,7 @@ const Hero: React.FC = () => {
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-black/40 z-10"></div>
         <img 
-          src="/lovable-uploads/0c11fcc5-eb56-4946-882e-0d40855724e2.png" 
+          src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=2574&auto=format&fit=crop" 
           alt="Hero background" 
           className="w-full h-full object-cover object-center"
         />

@@ -9,7 +9,7 @@ const QualitySection: React.FC = () => {
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-black/50 z-10"></div>
         <img 
-          src="/lovable-uploads/ee7c48fa-1c75-451d-8eba-e65d8dcb5255.png" 
+          src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2670&auto=format&fit=crop" 
           alt="Quality products" 
           className="w-full h-full object-cover"
         />
