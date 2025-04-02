@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -24,10 +24,10 @@ const Hero: React.FC = () => {
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 md:px-8 text-center">
         <div className="space-y-6 max-w-4xl mx-auto">
-          <h1 className="text-white text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold opacity-0 animate-fade-up stagger-2">
-            KLASSICO
+          <h1 className="text-white text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-display font-light opacity-0 animate-fade-up stagger-2">
+            KLA<span className="text-red-600">SS</span>ICO
           </h1>
-          <p className="text-white text-xl md:text-2xl opacity-0 animate-fade-up stagger-3">
+          <p className="text-white text-xl md:text-2xl font-serif opacity-0 animate-fade-up stagger-3">
             Premium quality clothing for the modern individual
           </p>
           

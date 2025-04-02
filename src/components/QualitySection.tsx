@@ -18,13 +18,13 @@ const QualitySection: React.FC = () => {
       {/* Content */}
       <div className="container mx-auto px-4 md:px-8 relative z-10">
         <div className="max-w-xl">
-          <h2 className="text-4xl md:text-5xl font-light text-white mb-6">
-            KLASSICO Quality Products <br />At Affordable Prices
+          <h2 className="text-4xl md:text-5xl font-display text-white mb-6">
+            KLA<span className="text-red-600">SS</span>ICO Quality Products <br />At Affordable Prices
           </h2>
           
           <Link 
             to="/about" 
-            className="inline-flex px-10 py-3 bg-black text-white uppercase tracking-widest text-sm hover:bg-red-600 transition-colors duration-500"
+            className="inline-flex px-10 py-3 bg-black text-white uppercase tracking-widest text-sm font-serif hover:bg-red-600 transition-colors duration-500"
           >
             Learn More
           </Link>

@@ -28,17 +28,17 @@ const CategoryBanner: React.FC<CategoryBannerProps> = ({
       
       {isNew && (
         <div className="absolute top-6 left-6">
-          <div className="px-4 py-1 bg-red-600 text-white text-sm font-light uppercase tracking-wider">
+          <div className="px-4 py-1 bg-red-600 text-white text-sm font-serif uppercase tracking-wider">
             New Arrival
           </div>
         </div>
       )}
       
       <div className="absolute bottom-0 left-0 w-full p-6 text-white">
-        <h2 className="text-3xl md:text-4xl font-light mb-6">{title}</h2>
+        <h2 className="text-3xl md:text-4xl font-display mb-6">{title}</h2>
         <Link 
           to={`/category/${category.toLowerCase()}`}
-          className="inline-block px-8 py-3 bg-black text-white uppercase tracking-widest text-xs font-light hover:bg-red-600 transition-colors duration-300"
+          className="inline-block px-8 py-3 bg-black text-white uppercase tracking-widest text-xs font-serif hover:bg-red-600 transition-colors duration-300"
         >
           Shop Now
         </Link>

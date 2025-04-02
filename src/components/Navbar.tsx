@@ -4,6 +4,7 @@ import { ShoppingBag, Menu, X, Search, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Link, useLocation } from 'react-router-dom';
 import NavbarAuth from './NavbarAuth';
+import WhatsAppButton from './WhatsAppButton';
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -27,8 +28,8 @@ const Navbar: React.FC = () => {
 
   // Menu categories
   const categories = [
-    { name: 'Men', submenu: ['Blazers', 'Jeans', 'Shirts', 'T-Shirts'] },
-    { name: 'Women', submenu: ['Kurtis', 'Sarees', 'Dresses', 'Tops'] },
+    { name: 'Men', submenu: ['Blazers', 'Jeans'] },
+    { name: 'Women', submenu: ['Kurtis', 'Sarees'] },
     { name: 'Exclusives', submenu: ['Limited Edition', 'New Arrivals', 'Bestsellers'] },
   ];
 
@@ -37,7 +38,7 @@ const Navbar: React.FC = () => {
       {/* Top red bar with "Since 2019" and social icons */}
       <div className="bg-red-600 text-white py-2 px-4">
         <div className="container mx-auto flex justify-between items-center">
-          <div className="text-sm">Since 2019</div>
+          <div className="text-sm font-serif">Since 2019</div>
           <div className="flex space-x-4">
             <a href="#" aria-label="Facebook" className="hover:text-gray-200 transition-colors">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
@@ -66,9 +67,9 @@ const Navbar: React.FC = () => {
           {/* Logo */}
           <Link 
             to="/" 
-            className="relative z-10 text-2xl font-bold uppercase tracking-wider"
+            className="relative z-10 text-2xl font-display font-bold uppercase tracking-wider"
           >
-            KLASSICO
+            KLA<span className="text-red-600">SS</span>ICO
           </Link>
           
           {/* Desktop Navigation - Horizontal menu with simple hover effect */}
@@ -77,7 +78,7 @@ const Navbar: React.FC = () => {
               <li>
                 <Link 
                   to="/"
-                  className="py-2 text-sm uppercase tracking-wider text-black border-b-2 border-red-600"
+                  className="py-2 text-sm uppercase tracking-wider text-black border-b-2 border-red-600 font-serif"
                 >
                   Home
                 </Link>
@@ -85,13 +86,13 @@ const Navbar: React.FC = () => {
               <li>
                 <Link 
                   to="/about" 
-                  className="py-2 text-sm uppercase tracking-wider text-black hover:text-red-600 transition-colors"
+                  className="py-2 text-sm uppercase tracking-wider text-black hover:text-red-600 transition-colors font-serif"
                 >
                   About Us
                 </Link>
               </li>
               <li className="group relative">
-                <button className="flex items-center space-x-1 py-2 text-sm uppercase tracking-wider text-black hover:text-red-600 transition-colors">
+                <button className="flex items-center space-x-1 py-2 text-sm uppercase tracking-wider text-black hover:text-red-600 transition-colors font-serif">
                   <span>Collection</span>
                   <ChevronDown size={14} />
                 </button>
@@ -103,7 +104,7 @@ const Navbar: React.FC = () => {
                       <Link 
                         key={item} 
                         to={`/category/${item.toLowerCase()}`}
-                        className="py-2 text-sm text-black hover:text-red-600 transition-colors whitespace-nowrap"
+                        className="py-2 text-sm text-black hover:text-red-600 transition-colors whitespace-nowrap font-serif"
                       >
                         {item}
                       </Link>
@@ -112,12 +113,15 @@ const Navbar: React.FC = () => {
                 </div>
               </li>
               <li>
-                <Link 
-                  to="/contact" 
-                  className="py-2 text-sm uppercase tracking-wider text-black hover:text-red-600 transition-colors"
+                <WhatsAppButton
+                  variant="ghost"
+                  className="py-2 text-sm uppercase tracking-wider text-black hover:text-red-600 transition-colors font-serif"
+                  showIcon={false}
+                  phoneNumber="+918910131099"
+                  message="I'd like to inquire about your products"
                 >
-                  Contact
-                </Link>
+                  Order via WhatsApp
+                </WhatsAppButton>
               </li>
             </ul>
           </nav>
@@ -168,7 +172,7 @@ const Navbar: React.FC = () => {
             <input 
               type="text" 
               placeholder="Search for products..." 
-              className="w-full h-full border-none outline-none text-sm"
+              className="w-full h-full border-none outline-none text-sm font-serif"
             />
             <button className="px-4">
               <Search className="w-5 h-5 text-black" />
@@ -189,19 +193,19 @@ const Navbar: React.FC = () => {
             <input 
               type="text" 
               placeholder="Search for products..." 
-              className="w-full border border-gray-200 rounded-none px-4 py-2 text-sm"
+              className="w-full border border-gray-200 rounded-none px-4 py-2 text-sm font-serif"
             />
           </div>
           
           {categories.map((category) => (
             <div key={category.name} className="mb-4">
-              <h3 className="text-sm font-light uppercase tracking-widest mb-2">{category.name}</h3>
+              <h3 className="text-sm font-light uppercase tracking-widest mb-2 font-serif">{category.name}</h3>
               <ul className="space-y-2 pl-2">
                 {category.submenu.map((item) => (
                   <li key={item}>
                     <Link 
                       to={`/category/${item.toLowerCase()}`}
-                      className="text-sm text-gray-600 tracking-wider"
+                      className="text-sm text-gray-600 tracking-wider font-serif"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       {item}
@@ -215,20 +219,16 @@ const Navbar: React.FC = () => {
           <div className="border-t border-gray-200 pt-4 mt-4">
             <Link 
               to="/about" 
-              className="block text-sm font-light uppercase tracking-widest mb-3"
+              className="block text-sm font-light uppercase tracking-widest mb-3 font-serif"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               About
             </Link>
-            <a 
-              href="https://wa.me/918910131099"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center px-4 py-2 bg-red-600 text-white text-xs uppercase tracking-widest font-light"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Order via WhatsApp
-            </a>
+            <WhatsAppButton 
+              className="flex items-center justify-center px-4 py-2 bg-red-600 text-white text-xs uppercase tracking-widest font-light w-full"
+              phoneNumber="+918910131099"
+              message="I'd like to inquire about your products"
+            />
           </div>
         </div>
       </div>

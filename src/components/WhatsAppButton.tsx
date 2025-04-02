@@ -9,6 +9,8 @@ type WhatsAppButtonProps = {
   message?: string;
   className?: string;
   variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
+  children?: React.ReactNode;
+  showIcon?: boolean;
 };
 
 const WhatsAppButton: React.FC<WhatsAppButtonProps> = ({
@@ -16,7 +18,9 @@ const WhatsAppButton: React.FC<WhatsAppButtonProps> = ({
   phoneNumber = "+918910131099", // WhatsApp number
   message = "I'd like to inquire about",
   className,
-  variant = "default"
+  variant = "default",
+  children,
+  showIcon = true
 }) => {
   const handleWhatsAppClick = () => {
     const whatsappMessage = productName 
@@ -30,11 +34,11 @@ const WhatsAppButton: React.FC<WhatsAppButtonProps> = ({
   return (
     <Button 
       onClick={handleWhatsAppClick}
-      className={`uppercase font-bold text-xs ${className}`}
+      className={`uppercase font-serif text-xs ${className}`}
       variant={variant}
     >
-      <MessageCircle className="mr-2" />
-      Order on WhatsApp
+      {showIcon && <MessageCircle className="mr-2" />}
+      {children || "Order on WhatsApp"}
     </Button>
   );
 };

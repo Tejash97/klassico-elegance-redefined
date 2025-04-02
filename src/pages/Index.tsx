@@ -73,14 +73,14 @@ const Index: React.FC = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <CategoryBanner 
-              image="https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?q=80&w=2787&auto=format&fit=crop"
-              title="Men's Clothing"
+              image="https://images.unsplash.com/photo-1578932750294-f5075e85f886?q=80&w=2670&auto=format&fit=crop"
+              title="Men's Collection"
               category="men"
               isNew={true}
             />
             <CategoryBanner 
-              image="https://images.unsplash.com/photo-1618932260643-eee4a2f652a6?q=80&w=2680&auto=format&fit=crop"
-              title="Women's Clothing"
+              image="https://images.unsplash.com/photo-1619414206962-e6aa8779abd6?q=80&w=2574&auto=format&fit=crop"
+              title="Women's Collection"
               category="women"
               isNew={true}
             />
